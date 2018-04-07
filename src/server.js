@@ -70,7 +70,7 @@ app.get('/', function(req, res){
 		  }
 
 		}).catch(e => {
-		  console.log(e);
+		  res.send(undefinedJSON);
 		});
 
 });
