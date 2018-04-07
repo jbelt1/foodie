@@ -22,6 +22,7 @@ app.get('/', function(req, res){
 	var budget;
 	var found = false;
 
+	food = food.replace(/_/g, " ");
 	var area = areaUnderscores.replace(/_/g, " ");
 	budget = parseInt(inputBudget);
 
