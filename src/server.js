@@ -50,14 +50,16 @@ app.get('/', function(req, res){
 		  var i = 0;
 		  var currentBusiness;
 		  var businesses = response.jsonBody.businesses;
-		  var Result;
+		  var Result = [];
 		  
 		  while (!found && i < businesses.length) {
 		  	currentBusiness = businesses[i];
 		  	if (prices[currentBusiness.price] < budget) {
-		  		Result = currentBusiness;
-		  		Result["isFound"] = true;
-		  		Result["errorMessage"] = null;
+		  		currentBusiness["isFound"] = true;
+		  		currentBusiness["errorMessage"] = null;
+		  		Result.push(currentBusiness);
+		  	}
+		  	if (Result.length === 3) {
 		  		found = true;
 		  	}
 		  	i++;
