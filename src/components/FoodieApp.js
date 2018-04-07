@@ -67,11 +67,11 @@ class FoodieApp extends Component {
       console.log(foodProcessed);
       console.log(locationProcessed);
       console.log(budget);
-      const url = "/?location="+locationProcessed+"&food="+foodProcessed+"&budget="+budget; 
+      const url = "http://localhost:8080/?location="+locationProcessed+"&food="+foodProcessed+"&budget="+budget; 
       console.log(url);
       fetch(url)
       .then(results => {
-        console.log(results);
+        console.log(results.json());
       });
     }
   }

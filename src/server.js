@@ -16,6 +16,8 @@ const undefinedJSON = {
 }
 
 app.get('/', function(req, res){
+
+	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
 	var areaUnderscores = req.query.location;
 	var food = req.query.food;
 	var inputBudget = req.query.budget;
