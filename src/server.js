@@ -67,7 +67,7 @@ app.get('/', function(req, res){
 		  	i++;
 		  }
 
-		  if (!found) {
+		  if (Result.length === 0) {
 		  	res.send(undefinedJSON);
 		  } else {
 		  	res.send(Result);
