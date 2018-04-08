@@ -31,7 +31,7 @@ function FoodFinder(props){
           <input 
             id = "budget-input"
             value = {budget}
-            placeholder = "e.g. 8"
+            placeholder = "e.g. $8"
             onChange = {props.updateBudget}
           >
           </input>
