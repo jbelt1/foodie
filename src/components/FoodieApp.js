@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import FoodFinder from './FoodFinder.js'
 import '../css/foodieApp.css';
 
-
-
 class FoodieApp extends Component {
   constructor(props){
     super(props);
@@ -12,6 +10,8 @@ class FoodieApp extends Component {
       selectedLocation: "",
       budget: "",
       sendable: false,
+      appState: 0,
+      results: null,
     };
     this.checkSendable = this.checkSendable.bind(this);
   }
@@ -59,7 +59,8 @@ class FoodieApp extends Component {
     setTimeout(this.checkSendable, 500);
   }
 
-  handleSearch(){
+  handleSearch(e){
+    e.preventDefault();
     const {selectedFood, selectedLocation, budget, sendable} = this.state;
     if (sendable){
       const foodProcessed = selectedFood.replace(/ /g, "_");
@@ -70,16 +71,24 @@ class FoodieApp extends Component {
       const url = "http://localhost:8080/?location="+locationProcessed+"&food="+foodProcessed+"&budget="+budget; 
       console.log(url);
       fetch(url)
-      .then(results => {
-        console.log(results.json());
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        this.setState({
+          appState: 1,
+          results: data,
+        });
       });
     }
   }
 
   render() {
-    return (
-      <div id = "foodFinder">
-        <FoodFinder
+    let currState = null
+    if (this.state.appState === 0){
+      currState = 
+          <FoodFinder
           currValues = {
             {
               budget: this.state.budget,
@@ -93,9 +102,16 @@ class FoodieApp extends Component {
             this.updateLocation(e)}
           updateBudget = {(e) => 
             this.updateBudget(e)}
-          onClick = {() => 
-            this.handleSearch()}
+          onSubmit = {(e) => 
+            this.handleSearch(e)}
         />
+    }
+    else {
+      currState = <p>hi</p>
+    }
+    return (
+      <div id = "foodFinder">
+        {currState}
       </div>
     );
   }

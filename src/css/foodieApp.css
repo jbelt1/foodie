@@ -1,28 +1,91 @@
-#food-dropdown ul {
-  list-style-type: none;
+body, html {
+  width:100%;
+  height:100%;
+  margin: 0;
+  font-size: 20px;
+}
+
+#root, #foodFinder {
+  height:100%;
+  width: 100%;
+}
+
+#foodFinder {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#finder-wrapper{
+  width: 60%;
+  height: 7%;
+}
+
+#finder-wrapper form{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#finder-wrapper div{
+  display: flex;
+  flex-direction: row;
+  border-right: solid 1px grey;
+  align-items: center;
+}
+
+#finder-wrapper div p{
+  margin-left: 5px;
+  color: black;
+  font-size: 14px;
+  cursor: default;
+  flex-grow: 1
 }
 
 .food-option {
   cursor: pointer;
 }
 
-textarea {
-  resize: none;
-  text-align: center;
-  vertical-align: center;
-  padding: 15px 32px;
+input {
+  height: 40%;
+  text-align: left;
   font-size: 16px;
+  border: none;
+  margin: 0 auto;
+  padding: 0;
+  margin-left: 5px;
+  margin-right: 5px;
+  flex-grow: 2;
+}
+
+input:focus{
+  outline: none;
 }
   
 #search {
   border: none;
-  display: inline-block;
   text-decoration: none;
   font-size: 16px;
   text-align: center;
-  padding: 15px 32px;
   background-color: black;
   color: white;
+  vertical-align: middle;
+}
+
+#submit input {
+  vertical-align: middle;
   cursor: pointer;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+#food, #budget, #submit {
+  flex-grow: 1;
+}
+
+#location {
+  flex-grow: 5;
 }
 

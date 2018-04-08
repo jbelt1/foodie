@@ -1,36 +1,51 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 function FoodFinder(props){
   const {budget, location, food} = props.currValues;
   return(
     <div id = "finder-wrapper">
-      <textarea
-        id = "food-input"
-        value = {food}
-        placeholder = "Food?"
-        onChange = {props.updateFood}
-      >
-      </textarea>
-      <textarea 
-        id = "location-input"
-        value = {location}
-        placeholder = "City, State"
-        onChange = {props.updateLocation}
-      >
-      </textarea>
-      <textarea 
-        id = "budget-input"
-        value = {budget}
-        placeholder = "Budget?"
-        onChange = {props.updateBudget}
-      >
-      </textarea>
-      <button 
-      id = "search"
-      onClick = {props.onClick}
-      >
-      Search
-      </button>
+      <form onSubmit = {props.onSubmit}>
+        <div id = "food">
+          <p>Food?</p>
+          <input 
+            id = "food-input"
+            value = {food}
+            placeholder = "e.g. Chicken..."
+            onChange = {props.updateFood}
+
+          >
+          </input>
+        </div>
+        <div id = "location">
+          <p>Location?</p>
+          <input 
+            id = "location-input"
+            value = {location}
+            placeholder = "e.g. Baltimore, Maryland..."
+            onChange = {props.updateLocation}
+          >
+          </input>
+        </div>
+        <div id = "budget">
+          <p>Budget?</p>
+          <input 
+            id = "budget-input"
+            value = {budget}
+            placeholder = "e.g. 8"
+            onChange = {props.updateBudget}
+          >
+          </input>
+        </div>
+        <div id = "submit">
+          <input 
+            id = "search"
+            type = "submit"
+            onClick = {props.onSubmit}
+            value = "Search"
+          >
+          </input>
+        </div>
+      </form>
     </div>
   );
 }
