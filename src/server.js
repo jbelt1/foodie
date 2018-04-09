@@ -24,6 +24,7 @@ app.get('/', function(req, res){
 	var area = req.query.location;
 	var food = req.query.food;
 	var budget = req.query.budget;
+	var stringBudget;
 	var found = false;
 	var result = [];
 	var finalBusinesses = [];
@@ -33,32 +34,33 @@ app.get('/', function(req, res){
 	area = area.replace(/_/g, " ");
 	budget = parseInt(budget);
 
+	if (budget < 8) {
+		stringBudget = "1";
+	} else if (budget < 12) {
+		stringBudget = "1,2";
+	} else if (budget < 16) {
+		stringBudget = "1,2,3";
+	} else {
+		stringBudget = "1,2,3,4";
+	}
+
 	var searchRequest = {
 		term: food,
 		location: area,
 		sort_by: "rating",
-		limit: 50
+		limit: 50,
+		price: stringBudget
 	};
-
-	if (budget < 8) {
-		budget = 1;
-	} else if (budget < 12) {
-		budget = 2;
-	} else if (budget < 16) {
-		budget = 3;
-	} else {
-		budget = 4;
-	}
 
 	client.search(searchRequest).then(response => {
 		  var i = 0;
 		  var businesses = response.jsonBody.businesses;
 		  var business;
+		  console.log(businesses);
 		  
 		  // Querying initial parameters and finding 3 best results
 		  while (!found && i < businesses.length) {
 		  	currentBusiness = businesses[i];
-		  	if (prices[currentBusiness.price] < budget) {
 		  		result.push({
 		  			rating: currentBusiness["rating"],
 		  			id: currentBusiness["id"],
@@ -68,7 +70,6 @@ app.get('/', function(req, res){
 		  			errorMessage: null,
 		  			price: priceIndentifiers[prices[currentBusiness["price"]]]
 		  		});
-		  	}
 		  	if (result.length === 3) {
 		  		found = true;
 		  	}
@@ -80,46 +81,46 @@ app.get('/', function(req, res){
 		  // Querying each result of the first search for more specific details
 		  result.forEach(currentBusiness => {
 		  	client.business(currentBusiness["id"]).then(response => {
-			  		business = response.jsonBody;
-			  		var hours = [];
-			  		var hour_string;
-			  		var address_string  = "";
-			  		var k = 0;
+				business = response.jsonBody;
+			  	var hours = [];
+			  	var hour_string;
+			  	var address_string  = "";
+			  	var k = 0;
 
-			  		j = 0;
-			  		if (business.hours.length > 0) {
-				  		while (j < business.hours[0].open.length) {
-				  			hour_string = days[j] + ": " + toTwelveClock(business.hours[0].open[j].start) + "-" + toTwelveClock(business.hours[0].open[j].end);
-				  			hours.push(hour_string);
-				  			j++;
-				  		}
-			  		}
-
-			  		while (k < business.location.display_address.length - 1) {
-			  			address_string += business.location.display_address[k] + ", ";
-			  			k++;
-			  		}
-			  		address_string += business.location.display_address[k];
-
-				  currentBusiness["display_phone"] = business.display_phone;
-				  currentBusiness["latitude"] = business.coordinates.latitude;
-				  currentBusiness["longitude"] = business.coordinates.longitude;
-				  currentBusiness["address"] = address_string;
-				  // console.log(business.location.display_address);
-				  currentBusiness["hours"] = hours;
-				  finalBusinesses.push(currentBusiness);
-				  businessProcessed++;
-				  if (businessProcessed === (result.length)) {
-				  	if (result.length === 0) {
-				  		res.send(undefinedJSON);
-				  	} else {
-				  		finalBusinesses = sort(finalBusinesses);
-				  		res.send(finalBusinesses);
+			  	j = 0;
+			  	if (business.hours.length > 0) {
+					while (j < business.hours[0].open.length) {
+				  		hour_string = days[j] + ": " + toTwelveClock(business.hours[0].open[j].start) + "-" + toTwelveClock(business.hours[0].open[j].end);
+				  		hours.push(hour_string);
+				  		j++;
 				  	}
+			  	}
+
+			  	while (k < business.location.display_address.length - 1) {
+			  		address_string += business.location.display_address[k] + ", ";
+			  		k++;
+			  	}
+			  	address_string += business.location.display_address[k];
+
+				currentBusiness["display_phone"] = business.display_phone;
+				currentBusiness["latitude"] = business.coordinates.latitude;
+				currentBusiness["longitude"] = business.coordinates.longitude;
+				currentBusiness["address"] = address_string;
+				// console.log(business.location.display_address);
+				currentBusiness["hours"] = hours;
+				finalBusinesses.push(currentBusiness);
+				businessProcessed++;
+				if (businessProcessed === (result.length)) {
+				  if (result.length === 0) {
+				  	res.send(undefinedJSON);
+				  } else {
+				  	finalBusinesses = sort(finalBusinesses);
+				  	res.send(finalBusinesses);
 				  }
-				}).catch(e => {
-				  res.send(undefinedJSON);
-				});
+				}
+			}).catch(e => {
+			  res.send(undefinedJSON);
+			});
 		  });
 
 		}).catch(e => {	
