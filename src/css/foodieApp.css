@@ -130,6 +130,9 @@ input:focus{
 
 .result-footer {
   margin-bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
 }
 
 #results-wrapper img{
@@ -142,7 +145,6 @@ input:focus{
 }
 
 .result-address, .result-phone {
-  width:50%;
   white-space: nowrap;
 }
 
