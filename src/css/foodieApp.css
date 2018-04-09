@@ -3,42 +3,48 @@ body, html {
   height:100%;
   margin: 0;
   font-size: 20px;
+  min-width: 1050px;
 }
 
-#root, #foodFinder {
+#root, #appContainer {
   height:100%;
   width: 100%;
 }
 
-#foodFinder {
+#appContainer {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   align-items: center;
-}
-
-#finder-wrapper{
-  width: 60%;
-  height: 7%;
-}
-
-#finder-wrapper form{
-  display: flex;
-  flex-direction: row;
   justify-content: center;
 }
 
-#finder-wrapper div{
+#finder-wrapper{
+  width: 80%;
+  height: 7%;
+  display: flex;
+  border: solid 1px grey;
+  border-radius: 10px;
+}
+
+#finder-wrapper form{
+  width: 100%;
+  margin: 0;
   display: flex;
   flex-direction: row;
-  border-right: solid 1px grey;
+  border-radius: 10px;
+}
+
+#finder-wrapper form div{
+  display: flex;
+  flex-direction: row;
   align-items: center;
 }
 
 #finder-wrapper div p{
   margin-left: 5px;
-  color: black;
-  font-size: 14px;
+  color: #68686C;
+  font-size: 16px;
+  font-weight: bold;
   cursor: default;
   flex-grow: 1
 }
@@ -48,7 +54,7 @@ body, html {
 }
 
 input {
-  height: 40%;
+  height: 100%;
   text-align: left;
   font-size: 16px;
   border: none;
@@ -66,11 +72,12 @@ input:focus{
 #search {
   border: none;
   text-decoration: none;
-  font-size: 16px;
+  font-size: 14px;
   text-align: center;
   background-color: black;
   color: white;
   vertical-align: middle;
+  border-radius: 0px 8px 8px 0px;
 }
 
 #submit input {
@@ -85,7 +92,84 @@ input:focus{
   flex-grow: 1;
 }
 
+#food, #budget, #location {
+  border-right: solid 1px grey;
+}
+
 #location {
-  flex-grow: 5;
+  width: 50%;
+}
+
+#results-wrapper {
+  display: block;
+  flex-grow: 1;
+  width: 80%;
+}
+
+#result-1, #result-2, #result-3 {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  flex-grow: 1;
+  border-bottom: solid 1px grey;
+  padding:15px 0 15px 0;
+}
+
+.result-body, .result-header, .result-footer {
+  width: 90%;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.result-header {
+  margin-top: 0;
+}
+
+.result-footer {
+  margin-bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+}
+
+#results-wrapper img{
+  height:200px;
+  width:200px;
+}
+
+.result-rank, .result-price {
+  width: 15%;
+}
+
+.result-address, .result-phone {
+  white-space: nowrap;
+}
+
+.result-phone, .result-price {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.result-name {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.result-main {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+/* Change the white to any color ;) */
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px white inset;
+}
+
+a[href^="tel:"] {
+  text-decoration: none;
 }
 

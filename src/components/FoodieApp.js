@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import FoodFinder from './FoodFinder.js'
+import FoodFinder from './FoodFinder.js';
+import FoodResults from './FoodResults.js';
 import '../css/foodieApp.css';
 
 class FoodieApp extends Component {
@@ -10,8 +11,9 @@ class FoodieApp extends Component {
       selectedLocation: "",
       budget: "",
       sendable: false,
-      appState: 0,
+      appState: "FoodFinder",
       results: null,
+      isLoading: false,
     };
     this.checkSendable = this.checkSendable.bind(this);
   }
@@ -25,7 +27,7 @@ class FoodieApp extends Component {
     const locationRegex = /^[a-zA-Z\s]+, [a-zA-Z\s]+$/;
     const incorrectLocation = (selectedLocation === "") || !(locationRegex.test(selectedLocation));
 
-    const budgetRegex = /^\d+$/;
+    const budgetRegex = /^\$\d+$/;
     const incorrectBudget = (budget === "") || !(budgetRegex.test(budget));
 
 
@@ -52,7 +54,10 @@ class FoodieApp extends Component {
   }
 
   updateBudget(e){
-    const budget = e.target.value;
+    let budget = e.target.value;
+    if (!(budget.includes("$"))){
+      budget = "$" + budget;
+    }
     this.setState({
       budget: budget,
     });
@@ -63,12 +68,16 @@ class FoodieApp extends Component {
     e.preventDefault();
     const {selectedFood, selectedLocation, budget, sendable} = this.state;
     if (sendable){
+      this.setState({
+          isLoading: true
+      });
       const foodProcessed = selectedFood.replace(/ /g, "_");
       const locationProcessed = selectedLocation.replace(/ /g, "_");
+      const budgetProcessed = budget.replace(/\$/g, "");
       console.log(foodProcessed);
       console.log(locationProcessed);
-      console.log(budget);
-      const url = "http://localhost:8080/?location="+locationProcessed+"&food="+foodProcessed+"&budget="+budget; 
+      console.log(budgetProcessed);
+      const url = "http://localhost:8080/?location="+locationProcessed+"&food="+foodProcessed+"&budget="+budgetProcessed; 
       console.log(url);
       fetch(url)
       .then((response) => {
@@ -77,18 +86,24 @@ class FoodieApp extends Component {
       .then((data) => {
         console.log(data);
         this.setState({
-          appState: 1,
+          appState: "FoodResults",
           results: data,
+          isLoading: false
         });
       });
     }
   }
 
   render() {
-    let currState = null
-    if (this.state.appState === 0){
-      currState = 
-          <FoodFinder
+    const state = this.state.appState;
+    let currState = (state === "FoodResults") ? 
+         (<FoodResults 
+          results = {this.state.results}
+          />
+        ) : null;
+    return (
+      <div id = "appContainer">
+        <FoodFinder
           currValues = {
             {
               budget: this.state.budget,
@@ -105,12 +120,6 @@ class FoodieApp extends Component {
           onSubmit = {(e) => 
             this.handleSearch(e)}
         />
-    }
-    else {
-      currState = <p>hi</p>
-    }
-    return (
-      <div id = "foodFinder">
         {currState}
       </div>
     );
