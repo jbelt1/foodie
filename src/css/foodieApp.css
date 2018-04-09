@@ -3,6 +3,7 @@ body, html {
   height:100%;
   margin: 0;
   font-size: 20px;
+  min-width: 1050px;
 }
 
 #root, #appContainer {
@@ -100,9 +101,7 @@ input:focus{
 }
 
 #results-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: block;
   flex-grow: 1;
   width: 80%;
 }
@@ -125,6 +124,14 @@ input:focus{
   justify-content: center;
 }
 
+.result-header {
+  margin-top: 0;
+}
+
+.result-footer {
+  margin-bottom: 0;
+}
+
 #results-wrapper img{
   height:200px;
   width:200px;
@@ -136,10 +143,12 @@ input:focus{
 
 .result-address, .result-phone {
   width:50%;
+  white-space: nowrap;
 }
 
 .result-phone, .result-price {
   text-align: right;
+  white-space: nowrap;
 }
 
 .result-name {
@@ -156,5 +165,9 @@ input:focus{
 /* Change the white to any color ;) */
 input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 30px white inset;
+}
+
+a[href^="tel:"] {
+  text-decoration: none;
 }
 

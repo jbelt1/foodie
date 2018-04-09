@@ -16,7 +16,7 @@ function Result(props){
 				</div>
 				<div className = "result-footer">
 					<div className = "result-address">Address: {address}</div>
-					<div className = "result-phone">Phone: {phone}</div>
+					<div className = "result-phone">Phone: <a href={"tel:"+phone}>{phone}</a></div>
 				</div>
 			</div>
 		</div>

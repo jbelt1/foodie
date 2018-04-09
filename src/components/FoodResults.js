@@ -3,9 +3,10 @@ import Result from './Result.js';
 
 function FoodResults(props) {
 	let resultNum = 1;
+	let results = props.results;
 	return(
 		<div id = "results-wrapper">
-			{props.results.map((result) => {
+			{results.map((result) => {
 				return (
 					<Result
 					key = {result.id}
@@ -13,7 +14,7 @@ function FoodResults(props) {
 					name = {result.name}
 					phone = {result.display_phone}
 					pictureUrl = {result.image_url}
-					address = {result.location.address1}
+					address = {result.address}
 					price = {result.price}
 					/>
 				)
