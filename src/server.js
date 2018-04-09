@@ -35,7 +35,9 @@ app.get('/', function(req, res){
 
 	var searchRequest = {
 		term: food,
-		location: area
+		location: area,
+		sort_by: "rating",
+		limit: 50
 	};
 
 	if (budget < 8) {
@@ -81,18 +83,29 @@ app.get('/', function(req, res){
 			  		business = response.jsonBody;
 			  		var hours = [];
 			  		var hour_string;
+			  		var address_string  = "";
+			  		var k = 0;
 
 			  		j = 0;
-			  		while (j < business.hours[0].open.length) {
-			  			hour_string = days[j] + ": " + toTwelveClock(business.hours[0].open[j].start) + "-" + toTwelveClock(business.hours[0].open[j].end);
-			  			hours.push(hour_string);
-			  			j++;
+			  		if (business.hours.length > 0) {
+				  		while (j < business.hours[0].open.length) {
+				  			hour_string = days[j] + ": " + toTwelveClock(business.hours[0].open[j].start) + "-" + toTwelveClock(business.hours[0].open[j].end);
+				  			hours.push(hour_string);
+				  			j++;
+				  		}
 			  		}
+
+			  		while (k < business.location.display_address.length - 1) {
+			  			address_string += business.location.display_address[k] + ", ";
+			  			k++;
+			  		}
+			  		address_string += business.location.display_address[k];
 
 				  currentBusiness["display_phone"] = business.display_phone;
 				  currentBusiness["latitude"] = business.coordinates.latitude;
 				  currentBusiness["longitude"] = business.coordinates.longitude;
-				  currentBusiness["address"] = business.location.display_address[0] + ", " + business.location.display_address[1];
+				  currentBusiness["address"] = address_string;
+				  // console.log(business.location.display_address);
 				  currentBusiness["hours"] = hours;
 				  finalBusinesses.push(currentBusiness);
 				  businessProcessed++;
@@ -105,7 +118,7 @@ app.get('/', function(req, res){
 				  	}
 				  }
 				}).catch(e => {
-				  console.log(e);
+				  res.send(undefinedJSON);
 				});
 		  });
 
