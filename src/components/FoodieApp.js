@@ -18,6 +18,9 @@ class FoodieApp extends Component {
     this.checkSendable = this.checkSendable.bind(this);
   }
 
+  componentDidMount(){
+  }
+
   checkSendable(){
     const {selectedFood, selectedLocation, budget} = this.state;
 
@@ -95,20 +98,16 @@ class FoodieApp extends Component {
   }
 
   render() {
-    const state = this.state.appState;
-    let currState = (state === "FoodResults") ? 
-         (<FoodResults 
-          results = {this.state.results}
-          />
-        ) : null;
-    return (
-      <div id = "appContainer">
-        <FoodFinder
+    const {appState,results,isLoading,budget,selectedLocation,selectedFood} = this.state;
+    let visibleApp = (isLoading) ? 
+          (<div id = "loading">Foodie</div>)
+          : 
+          (<FoodFinder
           currValues = {
             {
-              budget: this.state.budget,
-              location: this.state.selectedLocation,
-              food: this.state.selectedFood,
+              budget: budget,
+              location: selectedLocation,
+              food: selectedFood,
             }
           }
           updateFood = {(e) => 
@@ -120,6 +119,16 @@ class FoodieApp extends Component {
           onSubmit = {(e) => 
             this.handleSearch(e)}
         />
+        );
+    let currState = (appState === "FoodResults" && !isLoading) ? 
+         (<FoodResults 
+          results = {results}
+          />
+          ) : null;
+
+    return (
+      <div id = "appContainer">
+        {visibleApp}
         {currState}
       </div>
     );
