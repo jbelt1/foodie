@@ -1,9 +1,10 @@
 import React from 'react';
+import '../css/FoodFinder.css';
 
 function FoodFinder(props){
   const {budget, location, food} = props.currValues;
   return(
-    <div id = "finder-wrapper">
+    <div id = "finder-wrapper" className = {props.position}>
       <form onSubmit = {props.onSubmit}>
         <div id = "food">
           <p>Food?</p>

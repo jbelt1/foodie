@@ -1,0 +1,97 @@
+#finder-wrapper{
+  width: 100%;
+  flex: 1 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#finder-wrapper.top{
+  flex: 0 0 auto;
+  height: 50px;
+}
+
+#finder-wrapper form{
+  height: 45px;
+  width: 68%;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  border: solid 1px grey;
+  border-radius: 10px;
+}
+
+#finder-wrapper form div{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#finder-wrapper div p{
+  margin-left: 5px;
+  color: #68686C;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: default;
+}
+
+.food-option {
+  cursor: pointer;
+}
+
+input {
+  height: 100%;
+  text-align: left;
+  font-size: 16px;
+  border: none;
+  margin: 0 auto;
+  padding: 0;
+  margin-left: 5px;
+  margin-right: 5px;
+  flex-grow: 2;
+}
+
+input:focus{
+  outline: none;
+}
+  
+#search {
+  border: none;
+  text-decoration: none;
+  font-size: 14px;
+  text-align: center;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  vertical-align: middle;
+  border-radius: 0px 8px 8px 0px;
+}
+
+#submit input {
+  vertical-align: middle;
+  cursor: pointer;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0px 5px 0px 5px;
+}
+
+#food  {
+  width: 30%;
+}
+
+#budget {
+  width: 20%;
+}
+
+#submit {
+  flex-grow: 1;
+}
+
+#food, #budget, #location {
+  border-right: solid 1px grey;
+}
+
+#location {
+  width: 40%;
+}

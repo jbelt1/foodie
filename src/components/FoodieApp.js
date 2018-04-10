@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import FoodFinder from './FoodFinder.js';
 import FoodResults from './FoodResults.js';
-import '../css/foodieApp.css';
+import NavBar from './NavBar.js';
+import '../css/FoodieApp.css';
 
 class FoodieApp extends Component {
   constructor(props){
@@ -14,8 +15,21 @@ class FoodieApp extends Component {
       appState: "FoodFinder",
       results: null,
       isLoading: false,
+      loggedIn: false,
     };
     this.checkSendable = this.checkSendable.bind(this);
+  }
+
+  logout(){
+    this.setState({
+      loggedIn: false,
+    });
+  }
+
+  login(){
+    this.setState({
+      loggedIn: true,
+    });
   }
 
   componentDidMount(){
@@ -98,11 +112,13 @@ class FoodieApp extends Component {
   }
 
   render() {
-    const {appState,results,isLoading,budget,selectedLocation,selectedFood} = this.state;
+    const {appState,results,isLoading,budget,selectedLocation,selectedFood, loggedIn} = this.state;
+    let finderClass = (appState === "FoodResults") ? "top" : "";
     let visibleApp = (isLoading) ? 
           (<div id = "loading">Foodie</div>)
           : 
           (<FoodFinder
+          position = {finderClass}
           currValues = {
             {
               budget: budget,
@@ -128,6 +144,15 @@ class FoodieApp extends Component {
 
     return (
       <div id = "appContainer">
+        <NavBar
+        loggedIn = {loggedIn}
+        logout = {() =>
+          this.logout()
+        }
+        login = {() =>
+          this.login()
+        }
+        />
         {visibleApp}
         {currState}
       </div>
