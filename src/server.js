@@ -49,7 +49,8 @@ app.get('/', function(req, res){
 		location: area,
 		sort_by: "rating",
 		limit: 50,
-		price: stringBudget
+		price: stringBudget,
+		categories: "food, All"
 	};
 
 	client.search(searchRequest).then(response => {
@@ -74,6 +75,11 @@ app.get('/', function(req, res){
 		  		found = true;
 		  	}
 		  	i++;
+		  }
+
+		  // No results found
+		  if (result.length === 0) {
+		  	res.send(undefinedJSON);
 		  }
 
 		  var businessProcessed = 0;
