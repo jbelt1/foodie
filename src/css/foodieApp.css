@@ -3,7 +3,7 @@ body, html {
   height:100%;
   margin: 0;
   font-size: 20px;
-  min-width: 1150px;
+  min-width: 1100px;
 }
 
 #root, #appContainer {
@@ -51,9 +51,11 @@ body, html {
 
 .result-header {
   margin-top: 0;
+  margin-bottom: 0;
 }
 
 .result-footer {
+  margin-top: 0;
   margin-bottom: 0;
   display: flex;
   justify-content: space-between;
@@ -95,9 +97,25 @@ body, html {
   text-align: center;
 }
 
+.result-hours {
+  font-size: 15px;
+  vertical-align: middle;
+}
+
+.result-hours p, ul {
+  display: inline-block;
+}
+
+.result-hours ul {
+  font-size: 12px;
+  list-style-type: none;
+}
+
 #loading {
   margin: auto;
-  font-weight: bold;
+  font-family: 'Raleway', sans-serif;
+
+/*Animation*/
   -webkit-animation-name: spin;
   -webkit-animation-duration: 1000ms;
   -webkit-animation-iteration-count: infinite;
@@ -111,6 +129,10 @@ body, html {
   -ms-animation-iteration-count: infinite;
   -ms-animation-timing-function: linear;
   -o-transition: rotate(3600deg);
+}
+
+a{
+  text-decoration: none;
 }
 
 

@@ -16,6 +16,7 @@ function FoodResults(props) {
 					pictureUrl = {result.image_url}
 					address = {result.address}
 					price = {result.price}
+					hours = {result.hours}
 					/>
 				)
 			})}
