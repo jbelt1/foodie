@@ -1,0 +1,55 @@
+#navbar {
+	display: flex;
+	width: 100%;
+	justify-content: flex-start;
+	height: 50px;
+	align-items: center;
+	flex: 0 0 auto;
+}
+
+.unselected {
+	margin-right: 30px;
+	font-weight: bold;
+	background-color: white;
+	cursor: pointer;
+	border:none;
+	font-size: 15px;
+	height: 25px;
+}
+
+#navbar button:focus{
+  outline: none;
+}
+
+#space {
+	flex: 1 1 auto;
+}
+
+#about-button {
+}
+
+#home-button {
+	font-family: 'Raleway', sans-serif;
+	margin-left: 15px;
+}
+
+.selected {
+	margin-right: 30px;
+	font-weight: bold;
+	background-color: black;
+	border:none;
+	cursor: pointer;
+	font-size: 15px;
+	height: 25px;
+	color: white;
+}
+
+.nav-form {
+	position: fixed;
+	top: 37.5px;
+	right: 30px;
+	width: 240px;
+	height: 180px;
+	background-color: black;
+	border-radius: 0 0 10px 10px;
+}

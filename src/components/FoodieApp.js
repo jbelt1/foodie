@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import FoodFinder from './FoodFinder.js';
 import FoodResults from './FoodResults.js';
-import '../css/foodieApp.css';
+import NavBar from './NavBar.js';
+import '../css/FoodieApp.css';
 
 class FoodieApp extends Component {
   constructor(props){
@@ -14,8 +15,45 @@ class FoodieApp extends Component {
       appState: "FoodFinder",
       results: null,
       isLoading: false,
+      loggedIn: false,
+      navBarActive: false,
     };
     this.checkSendable = this.checkSendable.bind(this);
+    this.inactiveNavBar = this.inactiveNavBar.bind(this);
+    this.toggleNavBar = this.toggleNavBar.bind(this);
+    this.logout = this.logout.bind(this);
+    this.login = this.login.bind(this);
+    this.updateFood = this.updateFood.bind(this);
+    this.updateLocation = this.updateLocation.bind(this);
+    this.updateBudget = this.updateBudget.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
+  }
+
+  inactiveNavBar(){
+    const navBarActive = this.state.navBarActive;
+    if (navBarActive){
+      this.setState({
+        navBarActive: false,
+      })
+    }
+  }
+
+  toggleNavBar(){
+    this.setState((prevState) => ({
+      navBarActive: !(prevState.navBarActive),
+    }))
+  }
+
+  logout(){
+    this.setState({
+      loggedIn: false,
+    });
+  }
+
+  login(){
+    this.setState({
+      loggedIn: true,
+    });
   }
 
   componentDidMount(){
@@ -98,11 +136,13 @@ class FoodieApp extends Component {
   }
 
   render() {
-    const {appState,results,isLoading,budget,selectedLocation,selectedFood} = this.state;
+    const {appState,results,isLoading,budget,selectedLocation,selectedFood, loggedIn, navBarActive} = this.state;
+    let finderClass = (appState === "FoodResults") ? "top" : "";
     let visibleApp = (isLoading) ? 
           (<div id = "loading">Foodie</div>)
           : 
           (<FoodFinder
+          position = {finderClass}
           currValues = {
             {
               budget: budget,
@@ -110,14 +150,10 @@ class FoodieApp extends Component {
               food: selectedFood,
             }
           }
-          updateFood = {(e) => 
-            this.updateFood(e)}
-          updateLocation = {(e) => 
-            this.updateLocation(e)}
-          updateBudget = {(e) => 
-            this.updateBudget(e)}
-          onSubmit = {(e) => 
-            this.handleSearch(e)}
+          updateFood = {this.updateFood}
+          updateLocation = {this.updateLocation}
+          updateBudget = {this.updateBudget}
+          onSubmit = {this.handleSearch}
         />
         );
     let currState = (appState === "FoodResults" && !isLoading) ? 
@@ -127,7 +163,17 @@ class FoodieApp extends Component {
           ) : null;
 
     return (
-      <div id = "appContainer">
+      <div 
+      id = "appContainer"
+      // onClick = {this.inactiveNavBar}
+      >
+        <NavBar
+        loggedIn = {loggedIn}
+        logout = {this.logout}
+        login = {this.login}
+        active = {navBarActive}
+        toggleActivate = {this.toggleNavBar}
+        />
         {visibleApp}
         {currState}
       </div>

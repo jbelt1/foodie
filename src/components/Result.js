@@ -1,7 +1,8 @@
 import React from 'react';
 
 function Result(props){
-	const {resultNum, name, phone, pictureUrl, address, price} = props;
+	const {resultNum, name, phone, pictureUrl, address, price, hours} = props;
+	const mapAddress = address.replace(/ /g, "+");
 	return(
 		<div id = {"result-"+resultNum.toString()}>
 			<img src = {pictureUrl} alt = "#"/>
@@ -12,10 +13,22 @@ function Result(props){
 					<div className = "result-price">Price: {price} </div>
 				</div>
 				<div className = "result-body">
-					<div className = "result-hours">Hours: TBA</div>
+					<div className = "result-hours">
+						<p>Hours:</p> 
+						<ul>
+							{hours.map((hour) => {
+								return (
+									<li
+									key = {name+hour}>
+									{hour}
+									</li>
+								)
+							})}
+						</ul>
+					</div>
 				</div>
 				<div className = "result-footer">
-					<div className = "result-address">Address: {address}</div>
+					<div className = "result-address">Address: <a href = {"http://maps.google.com/maps?q=" + mapAddress}>{address}</a></div>
 					<div className = "result-phone">Phone: <a href={"tel:"+phone}>{phone}</a></div>
 				</div>
 			</div>

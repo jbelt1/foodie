@@ -3,7 +3,7 @@ body, html {
   height:100%;
   margin: 0;
   font-size: 20px;
-  min-width: 1150px;
+  min-width: 1100px;
 }
 
 #root, #appContainer {
@@ -17,118 +17,20 @@ body, html {
   align-items: center;
 }
 
-#finder-wrapper{
-  width: 68%;
-  height: 45px;
-  flex-shrink: 0;
-  margin: auto;
-  display: flex;
-  border: solid 1px grey;
-  border-radius: 10px;
-}
-
-#finder-wrapper form{
-  width: 100%;
-  margin: 0;
-  display: flex;
-  flex-direction: row;
-  border-radius: 10px;
-}
-
-#finder-wrapper form div{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-#finder-wrapper div p{
-  margin-left: 5px;
-  color: #68686C;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: default;
-}
-
-.food-option {
-  cursor: pointer;
-}
-
-input {
-  height: 100%;
-  text-align: left;
-  font-size: 16px;
-  border: none;
-  margin: 0 auto;
-  padding: 0;
-  margin-left: 5px;
-  margin-right: 5px;
-  flex-grow: 2;
-}
-
-input:focus{
-  outline: none;
-}
-  
-#search {
-  border: none;
-  text-decoration: none;
-  font-size: 14px;
-  text-align: center;
-  background-color: black;
-  color: white;
-  vertical-align: middle;
-  border-radius: 0px 8px 8px 0px;
-}
-
-#submit input {
-  vertical-align: middle;
-  cursor: pointer;
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0px 5px 0px 5px;
-}
-
-#food  {
-  width: 30%;
-}
-
-#budget {
-  width: 20%;
-}
-
-#submit {
-  flex-grow: 1;
-}
-
-#food, #budget, #location {
-  border-right: solid 1px grey;
-}
-
-#location {
-  width: 40%;
-}
-
-#food-results {
-  display: flex;
-  flex-direction: column;
-  width: 75%
-}
-
 #results-wrapper {
-  flex-grow: 1;
-  width: 100%;
+  width: 75%;
   overflow-y: scroll;
   border-bottom: solid 1px grey;
   border-top: solid 1px grey;
-  height: 620px;
+  flex: 0 1 auto ;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 #result-1, #result-2, #result-3 {
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: 28%;
   border-bottom: solid 1px grey;
   padding:15px 0 15px 0;
 }
@@ -147,15 +49,13 @@ input:focus{
   justify-content: center;
 }
 
-.dummy {
-  height:30px;
-}
-
 .result-header {
   margin-top: 0;
+  margin-bottom: 0;
 }
 
 .result-footer {
+  margin-top: 0;
   margin-bottom: 0;
   display: flex;
   justify-content: space-between;
@@ -163,7 +63,7 @@ input:focus{
 }
 
 #results-wrapper img{
-  height: 100%;
+  height: 175px;
   width: 175px;
   margin-left: 9px;
   border-radius: 10px;
@@ -197,9 +97,25 @@ input:focus{
   text-align: center;
 }
 
+.result-hours {
+  font-size: 15px;
+  vertical-align: middle;
+}
+
+.result-hours p, ul {
+  display: inline-block;
+}
+
+.result-hours ul {
+  font-size: 12px;
+  list-style-type: none;
+}
+
 #loading {
   margin: auto;
-  font-weight: bold;
+  font-family: 'Raleway', sans-serif;
+
+/*Animation*/
   -webkit-animation-name: spin;
   -webkit-animation-duration: 1000ms;
   -webkit-animation-iteration-count: infinite;
@@ -213,6 +129,10 @@ input:focus{
   -ms-animation-iteration-count: infinite;
   -ms-animation-timing-function: linear;
   -o-transition: rotate(3600deg);
+}
+
+a{
+  text-decoration: none;
 }
 
 
