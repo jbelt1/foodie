@@ -87,26 +87,6 @@ class FoodFinder extends Component {
       console.log(url);
 
       history.push(url);
-
-      /* const redirect = <Redirect from = {currUrl} to = {url} />
-      console.log(redirect);
-      this.setState({
-        redirect: redirect
-      })
-      
-
-      /*fetch(url)
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-        this.setState({
-          appState: "FoodResults",
-          results: data,
-          isLoading: false
-        }); 
-      });*/
     }
   }
 

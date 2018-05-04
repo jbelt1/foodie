@@ -4,7 +4,6 @@ import FoodFinder from './FoodFinder.js';
 import '../css/Home.css';
 
 function Home(props) {
-	//console.log (props);
 	const {history, match} = props;
 
 	const currUrl = match.url;
