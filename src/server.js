@@ -30,8 +30,8 @@ app.get('/', function(req, res){
 	var finalBusinesses = [];
 	var currentBusiness;
 
-	food = food.replace(/_/g, " ");
-	area = area.replace(/_/g, " ");
+	food = food.replace(/-/g, " ");
+	area = area.replace(/-/g, " ");
 	budget = parseInt(budget);
 
 	if (budget < 8) {
