@@ -1,0 +1,7 @@
+#home {
+  flex: 1 0 100px;
+  height: 500px;
+  width: 100%;
+  display: flex;
+  /*background-color: #E3E4A2;*/
+}
