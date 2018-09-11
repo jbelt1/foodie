@@ -11,19 +11,18 @@ const prices = {"$": 1, "$$": 2, "$$$": 3, "$$$$": 4};
 const priceIndentifiers = {1: "Low", 2: "Medium", 3: "High", 4: "Very High"};
 const days = {0: "Monday", 1: "Tuesday", 2: "Wednesday", 3: "Thursday", 4: "Friday", 5: "Saturday", 6: "Sunday"};
 
-const undefinedJSON = {
-	isFound: false,
-	errorMessage: "There are no results that meet your criteria"
-}
-
 app.get('/api/results', function(req, res){
+
 	var area = req.query.location;
 	var food = req.query.food;
 	var budget = req.query.budget;
 	var stringBudget;
 	var found = false;
 	var result = [];
-	var finalBusinesses = [];
+	var finalBusinesses = {
+		isFound: true,
+		results: []
+	};
 	var currentBusiness;
 
 	food = food.replace(/-/g, " ");
@@ -54,7 +53,7 @@ app.get('/api/results', function(req, res){
 		  var businesses = response.jsonBody.businesses;
 		  var business;
 		  //console.log(businesses);
-		  
+	
 		  // Querying initial parameters and finding 3 best results
 		  while (!found && i < businesses.length) {
 		  	currentBusiness = businesses[i];
@@ -110,23 +109,33 @@ app.get('/api/results', function(req, res){
 				currentBusiness["address"] = address_string;
 				// console.log(business.location.display_address);
 				currentBusiness["hours"] = hours;
-				finalBusinesses.push(currentBusiness);
+				finalBusinesses.results.push(currentBusiness);
 				businessProcessed++;
 				if (businessProcessed === (result.length)) {
 				  if (result.length === 0) {
-				  	res.send(undefinedJSON);
+				  	finalBusinesses.isFound = false;
+					finalBusinesses.results = [];
+					console.log(finalBusinesses);
+				  	res.send(finalBusinesses);
 				  } else {
-				  	finalBusinesses = sort(finalBusinesses);
+				  	finalBusinesses.results = sort(finalBusinesses.results);
+				  	console.log(finalBusinesses);
 				  	res.send(finalBusinesses);
 				  }
 				}
 			}).catch(e => {
-			  res.send(undefinedJSON);
+			  	finalBusinesses.isFound = false;
+				finalBusinesses.results = [];
+				console.log(finalBusinesses);
+			  	res.send(finalBusinesses);
 			});
 		  });
 
 		}).catch(e => {	
-		  res.send(undefinedJSON);
+		  	finalBusinesses.isFound = false;
+			finalBusinesses.results = [];
+			console.log(finalBusinesses);
+			res.send(finalBusinesses);
 		});
 });
 
