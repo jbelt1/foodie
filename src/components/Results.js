@@ -8,7 +8,7 @@ function Results(props) {
 	return(
 		<div id = "results">
 			<FoodFinder 
-			{...match.params}
+			isHome = {false}
 			history = {history}
 			position = "top"
 			/>

@@ -1,10 +1,11 @@
 #food-finder{
   font-family: 'Lato', sans-serif;
   width: 100%;
-  flex: 1 0 auto;
+  flex: 0 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 50px;
   /*min-width: 1280;*/
 }
 
@@ -14,7 +15,7 @@
   padding-top: 12px;
   padding-bottom: 13px;
   position: sticky;
-  top: 43px;
+  top: 48px;
   border-bottom: solid 2px #EB7608;
   background-color: white;
   z-index: 1;
@@ -28,16 +29,16 @@
   display: flex;
   flex-direction: row;
   border-radius: 10px;
-
 }
 
 #food-finder form div{
   display: flex;
   flex-direction: row;
   align-items: center;
+  opacity: 1;
 }
 
-#food-finder div p{
+#food-finder div label{
   margin-left: 5px;
   color: #68686C;
   font-size: 16px;
@@ -49,7 +50,7 @@
   cursor: pointer;
 }
 
-input {
+#food-finder input {
   font-family: 'Lato', sans-serif;
   height: 100%;
   text-align: left;
@@ -63,7 +64,7 @@ input {
   flex-grow: 1;
 }
 
-input:focus{
+#food-finder input:focus{
   outline: none;
 }
   

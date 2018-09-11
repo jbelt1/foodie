@@ -3,15 +3,17 @@ import '../css/NavBar.css';
 import {Link} from 'react-router-dom';
 
 function NavBar(props) {
-	const {loggedIn} = props;
+	const {loggedIn, logout} = props;
 	const userButton = loggedIn ? (
 		<button 
 		id = "logout-button"
-		//onClick = {this.userLogOut}
+		onClick = {logout}
 		className = "link"
+		name = "Logout"
 		>
 			Logout
-		</button>)
+		</button>
+		)
 		:
 		(
 		<Link
@@ -21,6 +23,13 @@ function NavBar(props) {
 		>
 			Login / Register
 		</Link>);
+	const favorites = loggedIn ? (
+		<Link 
+		to = "/favorites"
+		id = "favorites-link"
+		className = "link">
+			Favorites
+		</Link>) : null
 	return (
 		<div id = "navbar">
 			<Link 
@@ -38,6 +47,7 @@ function NavBar(props) {
 				About
 			</Link>
 			<div id = "space"></div>
+			{favorites}
 			{userButton}
 		</div>
 	);

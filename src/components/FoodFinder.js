@@ -5,26 +5,28 @@ import '../css/FoodFinder.css';
 class FoodFinder extends Component {
   constructor(props) {
     super(props);
-    let {food, location, budget} = this.props;
-    budget = "$" + budget;
+    const {isHome} = this.props 
+    let params = {food: "", location: "", budget: ""}
+    if ((sessionStorage.getItem('search')) && !isHome) {
+      params = JSON.parse(sessionStorage.getItem('search'))
+    }
     this.state = ({
-      food: food,
-      location: location,
-      budget: budget,
+      ...params,
       sendable: false,
-      sent: false,
     });
     this.checkSendable = this.checkSendable.bind(this);
-    this.updateFood = this.updateFood.bind(this);
-    this.updateLocation = this.updateLocation.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.updateBudget = this.updateBudget.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
   }
 
   componentWillUnmount() {
-    clearTimeout(this.timeOutFood);
-    clearTimeout(this.timeOutLocation);
+    clearTimeout(this.timeOutChange);
     clearTimeout(this.timeOutBudget);
+  }
+
+  componentDidMount(){
+    this.checkSendable();
   }
 
   checkSendable(){
@@ -46,20 +48,13 @@ class FoodFinder extends Component {
     });
   }
 
-  updateFood(e){
-    const food = e.target.value;
+  handleChange(e){
+    const change = e.target.value;
+    const type = e.target.name;
     this.setState({
-      food: food,
+      [type]: change,
     });
-    this.timeOutFood = setTimeout(this.checkSendable, 100);
-  }
-
-  updateLocation(e){
-    const location = e.target.value;
-    this.setState({
-      location: location,
-    });
-    this.timeOutLocation = setTimeout(this.checkSendable, 100);
+    this.timeOutChange = setTimeout(this.checkSendable, 100);
   }
 
   updateBudget(e){
@@ -78,13 +73,18 @@ class FoodFinder extends Component {
     const {food, location, budget, sendable} = this.state;
     const {history} = this.props;
     if (sendable){
+      const search = {
+        location: location,
+        food: food,
+        budget: budget,
+      }
+      sessionStorage.setItem('search', JSON.stringify(search));
       const foodProcessed = food.replace(/ /g, "-");
       let locationProcessed = location.replace(/, /g, "-");
       locationProcessed = locationProcessed.replace(/ /g, "-");
       const budgetProcessed = budget.replace(/\$/g, "");
 
       const url = "/results/"+locationProcessed+"/"+foodProcessed+"/"+budgetProcessed; 
-      console.log(url);
 
       history.push(url);
     }
@@ -96,28 +96,31 @@ class FoodFinder extends Component {
       <div id = "food-finder" className = {this.props.position}>
         <form onSubmit = {this.handleSearch}>
           <div id = "food">
-            <p>Food?</p>
+            <label>Food?</label>
             <input 
+              name = "food"
               id = "food-input"
               value = {food}
               placeholder = "e.g. Chicken..."
-              onChange = {this.updateFood}
+              onChange = {this.handleChange}
             >
             </input>
           </div>
           <div id = "location">
-            <p>Location?</p>
+            <label>Location?</label>
             <input 
+              name = "location"
               id = "location-input"
               value = {location}
               placeholder = "e.g. Baltimore, Maryland..."
-              onChange = {this.updateLocation}
+              onChange = {this.handleChange}
             >
             </input>
           </div>
           <div id = "budget">
-            <p>Budget?</p>
+            <label>Budget?</label>
             <input 
+              name = "budget"
               id = "budget-input"
               value = {budget}
               placeholder = "e.g. $8"

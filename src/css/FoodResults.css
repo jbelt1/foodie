@@ -164,19 +164,23 @@ a {
   text-decoration: none;
 }
 
-a:visited {
-  color: #500088;
-}
-
-.mdi-icon {
+.mdi-icon.star{
   cursor: pointer;
-  opacity: .5;
   z-index: 0;
 }
 
-.mdi-icon.active{
+.mdi-icon.star.inactive{
+  opacity: .5;
+}
+
+.mdi-icon.star.inactive:hover{
   opacity: 1;
 }
+
+.mdi-icon.star.active{
+  opacity: 1;
+}
+
 
 
 /* Change the white to any color ;) */

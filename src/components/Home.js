@@ -4,18 +4,17 @@ import FoodFinder from './FoodFinder.js';
 import '../css/Home.css';
 
 function Home(props) {
-	const {history, match} = props;
-
-	const currUrl = match.url;
+	const {history} = props;
 	return (
 		<div id = "home">
+			<div id = "header">
+				<h1 id = "logo">Foodie</h1>
+				<div id = "shadow"></div>
+			</div>
 			<FoodFinder 
-			food = "" 
-			location = ""
-			budget = ""
 			history = {history}
-			currUrl = {currUrl}
 			position = ""
+			isHome = {true}
 			/>
 		</div>
 	);

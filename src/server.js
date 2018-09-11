@@ -1,9 +1,7 @@
 var express = require('express');
 var app = express();
-const https = require('https');
 const yelp = require('yelp-fusion');
-const url = require('url'); 
-const querystring = require('querystring'); 
+
 
 const apiKey = 'NEuYDf8DITFJd77D9sVOsZDNNoQLC7YK4F3v1o_ZLTqIbB7RAcelzPsoycXetJOig1A125Cjrns0edw03oTSxcUEImaj_6qAuq4pyRfKm9SxrreVEqn8yJTDNEbIWnYx';
 
@@ -18,9 +16,7 @@ const undefinedJSON = {
 	errorMessage: "There are no results that meet your criteria"
 }
 
-app.get('/', function(req, res){
-	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-
+app.get('/api/results', function(req, res){
 	var area = req.query.location;
 	var food = req.query.food;
 	var budget = req.query.budget;
@@ -47,17 +43,17 @@ app.get('/', function(req, res){
 	var searchRequest = {
 		term: food,
 		location: area,
-		sort_by: "rating",
+		// sort_by: "rating",
 		limit: 50,
 		price: stringBudget,
-		categories: "food, All"
+		categories: "restaurants, All"
 	};
 
 	client.search(searchRequest).then(response => {
 		  var i = 0;
 		  var businesses = response.jsonBody.businesses;
 		  var business;
-		  console.log(businesses);
+		  //console.log(businesses);
 		  
 		  // Querying initial parameters and finding 3 best results
 		  while (!found && i < businesses.length) {
