@@ -7,12 +7,9 @@
 	display: flex;
 	width: 100%;
 	justify-content: flex-start;
-	height: 43px;
+	height: 48px;
 	align-items: center;
 	flex: 0 0 auto;
-	/*background-color: #0D1A5C;*/
-	/*background-color: #1E52F1;*/
-
 	background-color: #EB7608;
 	z-index: 1;
 }
@@ -26,14 +23,11 @@
 	border:none;
 	font-size: 15px;
 	text-decoration: none;
+	font-family: 'Lato', sans-serif;
 }
 
 .link:visited {
 	color: white;
-}
-
-button:focus {
-	outline:0;
 }
 
 #space {
@@ -44,5 +38,18 @@ button:focus {
 }
 
 #home-link {
-	margin-left: 15px;
+	margin-left: 30px;
 }
+
+#logout-button {
+	background-color: #EB7608;
+	height: 18px;
+	font-size: 15px;
+	font-weight: 700;
+	padding: 0;
+}
+
+#logout-button {
+	outline:0;
+}
+

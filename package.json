@@ -2,7 +2,7 @@
   "name": "foodie",
   "version": "0.1.0",
   "private": true,
-  "description": "Bitcamp foodie web app",
+  "description": "Foodie web app",
   "dependencies": {
     "express": "^4.16.3",
     "http": "0.0.0",
@@ -32,5 +32,9 @@
     "url": "https://github.com/jbelt1/foodie/issues"
   },
   "homepage": "https://github.com/jbelt1/foodie#readme",
-  "proxy": "http://localhost:8080"
+  "proxy": {
+    "/api": {
+      "target": "http://localhost:8080"
+    }
+  }
 }

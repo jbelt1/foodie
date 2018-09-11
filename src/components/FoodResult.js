@@ -3,19 +3,24 @@ import StarIcon from 'mdi-react/StarIcon';
 import StarOutlineIcon from 'mdi-react/StarOutlineIcon';
 
 function FoodResult(props){
-	const {resultNum, name, phone, pictureUrl, address, price, hours, resultStarToggle, resultStarHover, starClass, resultID} = props;
+	const {resultNum, name, phone, pictureUrl, address, price, hours, resultStarToggle, starClass, resultID, loggedIn} = props;
 	const mapAddress = address.replace(/ /g, "+");
+	const star = loggedIn ? 
+				<StarIcon 
+				color = "#EB7608" 
+				className = {"star " + starClass} 
+				size = "23" 
+				onClick = {() => resultStarToggle(resultID)}
+				/> :
+				<StarOutlineIcon
+				color = "grey"
+				className = {"star-outline"}
+				size = "23"
+				/>
 	return(
 		<div id = {"result-"+resultNum.toString()}>
 			<div className = "result-header">
-				<StarIcon 
-				color = "#EB7608" 
-				className = {starClass} 
-				size = "23" 
-				onClick = {() => resultStarToggle(resultID)}
-				onMouseEnter = {() => resultStarHover(resultID, "enter")}
-				onMouseLeave = {() => resultStarHover(resultID, "leave")}
-				/>
+				{star}
 				<div className = "result-name">{name}</div>
 				{/*<div className = "result-price">Price: {price} </div> */}
 			</div>
