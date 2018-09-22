@@ -14,7 +14,26 @@ class UserLoginForm extends Component {
 	userLogin(e){
 		e.preventDefault();
 		const login = this.props.login;
-		login();
+		const body = this.state
+		const url = "http://localhost:3000/api/user/login";
+		fetch(url, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json; charset=utf-8"
+			},
+			body: JSON.stringify(body)
+		})
+		.then((response) => {
+			return response.json()}
+		)
+		.then((data) =>{
+			if (data.success) {
+				login(data.user);
+			}
+			else {
+				console.log("Wrong password");
+			} 
+		});
 	}
 
 	handleChange(e){
@@ -39,6 +58,7 @@ class UserLoginForm extends Component {
 						value = {username}
 						onChange = {this.handleChange}
 						placeholder = "Username"
+						autoComplete = "off"
 						required
 						/>
 					</div>
@@ -51,6 +71,7 @@ class UserLoginForm extends Component {
 						value = {password}
 						onChange = {this.handleChange}
 						placeholder = "Password"
+						autoComplete = "off"
 						required
 						/>
  					</div>

@@ -13,28 +13,37 @@ import '../css/FoodieApp.css'
 class FoodieApp extends Component {
   constructor(props){
     super(props);
+    const user = localStorage.user;
     this.state ={
-      loggedIn: sessionStorage.getItem('loggedIn') === "true"
+      loggedIn: localStorage.getItem('loggedIn') === "true",
+      user: user ? JSON.parse(user) : {},
     };
 
     this.logout = this.logout.bind(this);
     this.login = this.login.bind(this);
+    this.register = this.register.bind(this);
   }
 
-  login(){
-    sessionStorage.setItem('loggedIn', true)
+  login(user){
     localStorage.setItem('loggedIn', true)
+    localStorage.setItem('user', JSON.stringify(user));
     this.setState({
       loggedIn: true,
+      user: user,
     })
     this.props.history.push('/');
   }
 
+  register(){
+    this.props.history.push('/');
+  }
+
   logout(){
-    sessionStorage.setItem('loggedIn', false)
     localStorage.setItem('loggedIn', false)
+    localStorage.setItem('user', "{}");
     this.setState({
       loggedIn: false,
+      user: {},
     });
     this.props.history.push('/');
   }
@@ -53,10 +62,9 @@ class FoodieApp extends Component {
         <Switch>
           <Route exact path = "/" render = {props => <Home {...props} />} />
           <Route exact path = "/about" render = {props => <About {...props} /> } />
-          <Route exact path = "/login-register" render = {props => <LoginRegister {...props} login = {this.login} /> } />
+          <Route exact path = "/login-register" render = {props => <LoginRegister {...props} login = {this.login} register = {this.register} /> } />
           <Route path = "/favorites" render = {props => <Favorites {...props} />} />
           <Route path = "/results/:location([a-zA-Z-]+-[a-zA-Z-]+)/:food([a-zA-Z-]+)/:budget(\d+)" render = {props => <Results {...props} loggedIn = {loggedIn}/> } />
-        {/*<Route path = "/" render {props => <NoPage }*/}
         </Switch>
       </div>
     );

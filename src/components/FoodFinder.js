@@ -103,6 +103,7 @@ class FoodFinder extends Component {
               value = {food}
               placeholder = "e.g. Chicken..."
               onChange = {this.handleChange}
+              autoComplete = "off"
             >
             </input>
           </div>
@@ -114,6 +115,7 @@ class FoodFinder extends Component {
               value = {location}
               placeholder = "e.g. Baltimore, Maryland..."
               onChange = {this.handleChange}
+              autoComplete = "off"
             >
             </input>
           </div>
@@ -125,6 +127,7 @@ class FoodFinder extends Component {
               value = {budget}
               placeholder = "e.g. $8"
               onChange = {this.updateBudget}
+              autoComplete = "off"
             >
             </input>
           </div>

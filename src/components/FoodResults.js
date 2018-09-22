@@ -8,6 +8,8 @@ class FoodResults extends Component {
 		const {budget, food, location} = this.props
 		this.state = {
 			isLoading: true,
+			isFound: true,
+			loggedIn: false,
 			results: [],
 			food: food,
       		location: location,
@@ -41,33 +43,40 @@ class FoodResults extends Component {
 		let starClass = {};
 		fetch(requestUrl, {
 			method: "GET",
-			credentials: "same-origin"
 		})
       	.then((response) => {
         	return response.json();
       	})
       	.then((data) => {
-	        data.forEach(result => {
-	        	starClass[result.id] = "inactive";
-	        	favorites[result.id] = false;
-	        });
-	        
-	        this.setState({
-	          results: data,
-	          isLoading: false,
-	          favorites: favorites, 
-	          starClass: starClass,
-	          loggedIn: sessionStorage.getItem('loggedIn') === "true", 
-	        }); 
+			const isFound = data.isFound;
+			const results = data.results;
+			if (isFound){
+				results.forEach(result => {
+					starClass[result.id] = "inactive";
+					favorites[result.id] = false;
+				});
+				
+				this.setState({
+					results: results,
+					isLoading: false,
+					favorites: favorites, 
+					starClass: starClass,
+					loggedIn: localStorage.getItem('loggedIn') === "true", 
+				}); 
+			}
+			else {
+				this.setState({
+					isLoading: false,
+					isFound: false,
+				})
+			}
       	});
 	}
 
 	render(){
-		const {isLoading, results, favorites, starClass, loggedIn} = this.state;
+		const {isLoading, isFound, results, favorites, starClass, loggedIn} = this.state;
 		let resultNum = 1;
-		const returns = isLoading ? (
-			<div id = "loading">Foodie</div>
-			) : (
+		const found = isFound ? (
 			<div id = "results-wrapper">
 				{results.map((result) => {
 				return (
@@ -87,8 +96,17 @@ class FoodResults extends Component {
 					starClass = {starClass[result.id]}
 					/>
 				)
-				})}
+			})}
 			</div>
+			) : (
+				<div id = "no-results">
+					No results :/ 
+				</div>
+			);
+		const returns = isLoading ? (
+			<div id = "loading">Foodie</div>
+			) : (
+				found
 			);
 		return(
 			<div id = "food-results">

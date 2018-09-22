@@ -5,6 +5,7 @@ import StarOutlineIcon from 'mdi-react/StarOutlineIcon';
 function FoodResult(props){
 	const {resultNum, name, phone, pictureUrl, address, price, hours, resultStarToggle, starClass, resultID, loggedIn} = props;
 	const mapAddress = address.replace(/ /g, "+");
+	console.log(loggedIn)
 	const star = loggedIn ? 
 				<StarIcon 
 				color = "#EB7608" 

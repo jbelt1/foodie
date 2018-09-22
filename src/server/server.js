@@ -1,7 +1,11 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
 const yelp = require('yelp-fusion');
+const bodyParser = require('body-parser');
+const user = require('./user.js');
 
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 const apiKey = 'NEuYDf8DITFJd77D9sVOsZDNNoQLC7YK4F3v1o_ZLTqIbB7RAcelzPsoycXetJOig1A125Cjrns0edw03oTSxcUEImaj_6qAuq4pyRfKm9SxrreVEqn8yJTDNEbIWnYx';
 
@@ -137,6 +141,20 @@ app.get('/api/results', function(req, res){
 			console.log(finalBusinesses);
 			res.send(finalBusinesses);
 		});
+});
+
+app.post('/api/user/register', function(req, res) {
+	const {username, email, password} = req.body;
+	user.register(username, email, password);
+	res.send({message:"success"});
+});
+
+app.post('/api/user/login', function(req, res) {
+	const {username, password} = req.body;
+	user.login(username, password, (ret) => {
+		console.log(ret);
+		res.send(ret);
+	});
 });
 
 function toTwelveClock(time) {
