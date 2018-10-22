@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Search from "@material-ui/icons/Search";
 import '../css/FoodFinder.css';
 
 
@@ -91,10 +92,16 @@ class FoodFinder extends Component {
   }
 
   render() {
+    const searchStyle = {
+      color: "#68686C",
+      margin: "auto",
+      paddingLeft: "5px"
+    }
     const {food, location, budget} = this.state;
     return (
       <div id = "food-finder" className = {this.props.position}>
         <form onSubmit = {this.handleSearch}>
+          <Search style = {searchStyle}/>
           <div id = "food">
             <label>Food?</label>
             <input 

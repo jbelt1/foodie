@@ -28,51 +28,6 @@
 	margin-left: 60px;
 }
 
-#remember-me {
-	height: 30px;
-	margin-bottom: 25px;
-	font-size: 14px;
-	display: flex;
-	align-items: center;
-}
-
-#remember-me input{
-	margin-left: 0;
-	margin-right: 15px;
-	-webkit-appearance: none;
-	border: 1px solid #cacece;
-	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
-	border-radius: 5px;
-	outline: none;
-	height: 20px;
-	width: 20px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}	
-
-#remember-me input:hover {
-	background: #EB7608;
-	opacity: .5;
-	outline: none;
-}
-
-#remember-me input:checked {
-	background: #EB7608;
-	outline: none;
-	border: 1px solid #EB7608;
-}
-
-#remember-me input:checked:after {
-	content: '\2714';
-	color: white;
-	font-size: 12px;
-}
-
-#remember-me input:checked:hover {
-	content: none;
-}
-
 .form h3 {
 	align-self: center;
 }

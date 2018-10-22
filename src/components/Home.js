@@ -4,8 +4,9 @@ import FoodFinder from './FoodFinder.js';
 import '../css/Home.css';
 
 function Home(props) {
-	const {history} = props;
-	return (
+	const {history, isLoading} = props;
+	if(!isLoading) {
+		return (
 		<div id = "home">
 			<div id = "header">
 				<h1 id = "logo">Foodie</h1>
@@ -17,7 +18,11 @@ function Home(props) {
 			isHome = {true}
 			/>
 		</div>
-	);
+		);
+	}
+	else {
+		return(<div id = "loading">Foodie</div>);
+	}
 }
 
 export default Home

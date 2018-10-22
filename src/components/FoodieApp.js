@@ -13,10 +13,10 @@ import '../css/FoodieApp.css'
 class FoodieApp extends Component {
   constructor(props){
     super(props);
-    const user = localStorage.user;
     this.state ={
-      loggedIn: localStorage.getItem('loggedIn') === "true",
-      user: user ? JSON.parse(user) : {},
+      loggedIn: false,
+      user: {},
+      isLoading: false,
     };
 
     this.logout = this.logout.bind(this);
@@ -25,11 +25,11 @@ class FoodieApp extends Component {
   }
 
   login(user){
-    localStorage.setItem('loggedIn', true)
-    localStorage.setItem('user', JSON.stringify(user));
+    sessionStorage.setItem('loggedIn', true);
     this.setState({
       loggedIn: true,
       user: user,
+      isLoading: false,
     })
     this.props.history.push('/');
   }
@@ -39,8 +39,8 @@ class FoodieApp extends Component {
   }
 
   logout(){
-    localStorage.setItem('loggedIn', false)
-    localStorage.setItem('user', "{}");
+    sessionStorage.setItem('loggedIn', false);
+    localStorage.setItem('token', null);
     this.setState({
       loggedIn: false,
       user: {},
@@ -49,10 +49,30 @@ class FoodieApp extends Component {
   }
 
   componentDidMount(){
+    const token = localStorage.getItem('token');
+    if (!(token === "null")) {
+      this.setState({
+        isLoading: true,
+      })
+      const url = "/api/user/autologin";
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          'x-access-token': token
+        },
+      })
+      .then((response) => {
+        return response.json()}
+      )
+      .then((data) =>{
+        this.login(data);
+      });
+    }
   }
 
   render() {
-    const {loggedIn} = this.state;
+    const {loggedIn, isLoading} = this.state;
     return (
       <div id = "appContainer">
         <NavBar
@@ -60,7 +80,7 @@ class FoodieApp extends Component {
         logout = {this.logout}
         />
         <Switch>
-          <Route exact path = "/" render = {props => <Home {...props} />} />
+          <Route exact path = "/" render = {props => <Home {...props} isLoading = {isLoading} />} />
           <Route exact path = "/about" render = {props => <About {...props} /> } />
           <Route exact path = "/login-register" render = {props => <LoginRegister {...props} login = {this.login} register = {this.register} /> } />
           <Route path = "/favorites" render = {props => <Favorites {...props} />} />
