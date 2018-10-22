@@ -22,6 +22,23 @@ class UserRegisterForm extends Component {
 
 	handleRegistration(e){
 		e.preventDefault()
+		const register = this.props.register
+		const body = this.state
+		const url = "http://localhost:3000/api/user/register";
+		fetch(url, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json; charset=utf-8"
+			},
+			body: JSON.stringify(body)
+		})
+		.then((response) => {
+			return response.json()}
+		)
+		.then((data) =>{
+			console.log(data.message);
+			register();
+		});
 	}
 
 	render(){
@@ -38,6 +55,7 @@ class UserRegisterForm extends Component {
 						value = {username} 
 						placeholder = "Username"
 						onChange = {this.handleChange}
+						autoComplete = "off"
 						required
 						/>
 					</div>
@@ -49,6 +67,7 @@ class UserRegisterForm extends Component {
 						value = {email}
 						onChange = {this.handleChange}
 						placeholder = "Email"
+						autoComplete = "off"
 						required
 						/>
  					</div>
@@ -61,6 +80,7 @@ class UserRegisterForm extends Component {
 						value = {password}
 						onChange = {this.handleChange}
 						placeholder = "Password"
+						autoComplete = "off"
 						required
 						/>
  					</div>

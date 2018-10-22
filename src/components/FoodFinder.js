@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Search from "@material-ui/icons/Search";
 import '../css/FoodFinder.css';
 
 
@@ -91,10 +92,16 @@ class FoodFinder extends Component {
   }
 
   render() {
+    const searchStyle = {
+      color: "#68686C",
+      margin: "auto",
+      paddingLeft: "5px"
+    }
     const {food, location, budget} = this.state;
     return (
       <div id = "food-finder" className = {this.props.position}>
         <form onSubmit = {this.handleSearch}>
+          <Search style = {searchStyle}/>
           <div id = "food">
             <label>Food?</label>
             <input 
@@ -103,6 +110,7 @@ class FoodFinder extends Component {
               value = {food}
               placeholder = "e.g. Chicken..."
               onChange = {this.handleChange}
+              autoComplete = "off"
             >
             </input>
           </div>
@@ -114,6 +122,7 @@ class FoodFinder extends Component {
               value = {location}
               placeholder = "e.g. Baltimore, Maryland..."
               onChange = {this.handleChange}
+              autoComplete = "off"
             >
             </input>
           </div>
@@ -125,6 +134,7 @@ class FoodFinder extends Component {
               value = {budget}
               placeholder = "e.g. $8"
               onChange = {this.updateBudget}
+              autoComplete = "off"
             >
             </input>
           </div>

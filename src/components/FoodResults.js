@@ -8,66 +8,86 @@ class FoodResults extends Component {
 		const {budget, food, location} = this.props
 		this.state = {
 			isLoading: true,
+			isFound: true,
+			loggedIn: false,
 			results: [],
 			food: food,
       		location: location,
       		budget: budget,
       		favorites: {},
-      		starClass: {},
+      		starColor: {},
 		}
 		this.resultStarToggle = this.resultStarToggle.bind(this);
+		this.resultStarHover = this.resultStarHover.bind(this);
 	}
 
 	resultStarToggle(id) {
-		const {favorites, starClass} = this.state
+		const {favorites, starColor} = this.state
 		if (favorites[id]){
 			favorites[id] = false;
-			starClass[id] = "inactive";
+			starColor[id] = "grey";
 		}
 		else {
 			favorites[id] = true;
-			starClass[id] = "active";
+			starColor[id] = "#EB7608";
 		}
 		this.setState({
 			favorites: favorites,
-			starClass: starClass,
+			starColor: starColor,
 		})
+	}
+
+	resultStarHover(id) {
+		const {favorites, starColor, loggedIn} = this.state
+		if (loggedIn && !favorites[id]){
+			starColor[id] = starColor[id] === "grey" ? "silver" : "grey"
+			this.setState({
+				starColor: starColor
+			})
+		}
 	}
 
 	componentDidMount() {
 		const {food, location, budget} = this.state;
-		const requestUrl = "http://localhost:3000/api/results/?location=" + location + "&food=" + food + "&budget=" + budget;
+		const requestUrl = "/api/results/?location=" + location + "&food=" + food + "&budget=" + budget;
 		let favorites = {};
-		let starClass = {};
+		let starColor = {};
 		fetch(requestUrl, {
 			method: "GET",
-			credentials: "same-origin"
 		})
       	.then((response) => {
         	return response.json();
       	})
       	.then((data) => {
-	        data.forEach(result => {
-	        	starClass[result.id] = "inactive";
-	        	favorites[result.id] = false;
-	        });
-	        
-	        this.setState({
-	          results: data,
-	          isLoading: false,
-	          favorites: favorites, 
-	          starClass: starClass,
-	          loggedIn: sessionStorage.getItem('loggedIn') === "true", 
-	        }); 
+			const isFound = data.isFound;
+			const results = data.results;
+			if (isFound){
+				results.forEach(result => {
+					starColor[result.id] = "silver";
+					favorites[result.id] = false;
+				});
+				
+				this.setState({
+					results: results,
+					isLoading: false,
+					favorites: favorites, 
+					starColor: starColor,
+					loggedIn: localStorage.getItem('loggedIn') === "true", 
+				}); 
+			}
+			else {
+				this.setState({
+					isLoading: false,
+					isFound: false,
+				})
+			}
       	});
 	}
 
 	render(){
-		const {isLoading, results, favorites, starClass, loggedIn} = this.state;
+		const {isLoading, isFound, results, favorites, starColor, loggedIn} = this.state;
 		let resultNum = 1;
-		const returns = isLoading ? (
-			<div id = "loading">Foodie</div>
-			) : (
+		const found = isFound ? (
 			<div id = "results-wrapper">
 				{results.map((result) => {
 				return (
@@ -82,13 +102,23 @@ class FoodResults extends Component {
 					price = {result.price}
 					hours = {result.hours}
 					resultStarToggle = {this.resultStarToggle}
+					resultStarHover= {this.resultStarHover}
 					loggedIn = {loggedIn}
 					resultFavorited = {favorites[result.id]}
-					starClass = {starClass[result.id]}
+					starColor = {starColor[result.id]}
 					/>
 				)
-				})}
+			})}
 			</div>
+			) : (
+				<div id = "no-results">
+					No results :/ 
+				</div>
+			);
+		const returns = isLoading ? (
+			<div id = "loading">Foodie</div>
+			) : (
+				found
 			);
 		return(
 			<div id = "food-results">

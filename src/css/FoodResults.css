@@ -164,22 +164,22 @@ a {
   text-decoration: none;
 }
 
-.mdi-icon.star{
+star{
   cursor: pointer;
   z-index: 0;
 }
 
-.mdi-icon.star.inactive{
+/* star.inactive{
   opacity: .5;
 }
 
-.mdi-icon.star.inactive:hover{
+star.inactive:hover{
   opacity: 1;
 }
 
-.mdi-icon.star.active{
+star.active{
   opacity: 1;
-}
+} */
 
 
 

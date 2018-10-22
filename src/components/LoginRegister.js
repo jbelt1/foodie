@@ -5,10 +5,11 @@ import '../css/LoginRegister.css';
 
 function LoginRegister(props){
 	const login = props.login
+	const register = props.register
 	return (
 		<div id = "login-register">
 			<UserLoginForm login = {login}/>
-			<UserRegisterForm/>
+			<UserRegisterForm register = {register}/>
 		</div>
 	);
 }

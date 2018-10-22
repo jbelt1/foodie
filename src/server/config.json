@@ -1,0 +1,9 @@
+{
+    "database" : {
+        "host": "foodie-instance.cah3nsmind1t.us-east-1.rds.amazonaws.com",
+        "user": "foodiedev",
+        "password": "UMDFoodie!",
+        "database": "foodie"
+    },
+    "secret" : "kooveandjeffarethefuckinggoats"
+}

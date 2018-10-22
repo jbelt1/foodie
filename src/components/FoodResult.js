@@ -1,21 +1,22 @@
 import React from 'react';
-import StarIcon from 'mdi-react/StarIcon';
-import StarOutlineIcon from 'mdi-react/StarOutlineIcon';
+import { Star, StarBorder} from '@material-ui/icons';
+
 
 function FoodResult(props){
-	const {resultNum, name, phone, pictureUrl, address, price, hours, resultStarToggle, starClass, resultID, loggedIn} = props;
+	const {resultNum, name, phone, pictureUrl, address, price, hours, resultStarToggle, resultStarHover, starColor, resultID, loggedIn} = props;
 	const mapAddress = address.replace(/ /g, "+");
+	let hourNum = 0;
 	const star = loggedIn ? 
-				<StarIcon 
-				color = "#EB7608" 
-				className = {"star " + starClass} 
-				size = "23" 
+				<Star  
+				style={{ fontSize: 25, cursor: "pointer", color: starColor}}
 				onClick = {() => resultStarToggle(resultID)}
+				onMouseEnter = {() => resultStarHover(resultID)}
+				onMouseLeave = {() => resultStarHover(resultID)}
 				/> :
-				<StarOutlineIcon
-				color = "grey"
+				<StarBorder
+				color = "disabled"
 				className = {"star-outline"}
-				size = "23"
+				style={{ fontSize: 25 }}
 				/>
 	return(
 		<div id = {"result-"+resultNum.toString()}>
@@ -30,7 +31,7 @@ function FoodResult(props){
 						<div className = "result-rank">#{resultNum}</div>
 					</div>
 					<div className = "main-two">
-						<div className = "result-address">Address: <a href = {"http://maps.google.com/maps?q=" + mapAddress}>{address}</a></div>
+						<div className = "result-address">Address: <a href={"http://maps.google.com/maps?q=" + mapAddress} target="_blank">{address}</a></div>
 						<div className = "result-phone">Phone: <a href={"tel:"+phone}>{phone}</a></div>
 					</div>
 					<div className = "main-three">
@@ -40,7 +41,7 @@ function FoodResult(props){
 								{hours.map((hour) => {
 									return (
 										<li
-										key = {name+hour}>
+										key = {name + "hour: " + hourNum++}>
 										{hour}
 										</li>
 									)

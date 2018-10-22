@@ -1,7 +1,13 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
 const yelp = require('yelp-fusion');
+const bodyParser = require('body-parser');
+const user = require('./user.js');
+const config = require('./config.json');
+const jwt = require('jsonwebtoken');
 
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 const apiKey = 'NEuYDf8DITFJd77D9sVOsZDNNoQLC7YK4F3v1o_ZLTqIbB7RAcelzPsoycXetJOig1A125Cjrns0edw03oTSxcUEImaj_6qAuq4pyRfKm9SxrreVEqn8yJTDNEbIWnYx';
 
@@ -139,6 +145,33 @@ app.get('/api/results', function(req, res){
 		});
 });
 
+app.post('/api/user/register', user.register);
+
+app.post('/api/user/login', user.login);
+
+app.use(function(req, res, next){
+	const token = req.headers["x-access-token"];
+	
+	if (token) {
+		jwt.verify(token, config.secret, function(err, decoded) {      
+			if (err) {
+			  return res.json({ success: false, message: 'Failed to authenticate token.' });    
+			} else {
+			  // if everything is good, save to request for use in other routes
+			  req.decoded = decoded;
+			}
+		})
+	}
+
+	next();
+});
+
+app.post('/api/user/autologin', function(req, res,){
+	if (req.decoded) {
+		const {iat, exp, ...user} = req.decoded
+		res.send(user);
+	}
+});
 function toTwelveClock(time) {
 	var PM = false;
 	var stringTime;

@@ -14,36 +14,65 @@ class FoodieApp extends Component {
   constructor(props){
     super(props);
     this.state ={
-      loggedIn: sessionStorage.getItem('loggedIn') === "true"
+      loggedIn: false,
+      user: {},
+      isLoading: false,
     };
 
     this.logout = this.logout.bind(this);
     this.login = this.login.bind(this);
+    this.register = this.register.bind(this);
   }
 
-  login(){
-    sessionStorage.setItem('loggedIn', true)
-    localStorage.setItem('loggedIn', true)
+  login(user){
+    sessionStorage.setItem('loggedIn', true);
     this.setState({
       loggedIn: true,
+      user: user,
+      isLoading: false,
     })
     this.props.history.push('/');
   }
 
+  register(){
+    this.props.history.push('/');
+  }
+
   logout(){
-    sessionStorage.setItem('loggedIn', false)
-    localStorage.setItem('loggedIn', false)
+    sessionStorage.setItem('loggedIn', false);
+    localStorage.setItem('token', null);
     this.setState({
       loggedIn: false,
+      user: {},
     });
     this.props.history.push('/');
   }
 
   componentDidMount(){
+    const token = localStorage.getItem('token');
+    if (!(token === "null")) {
+      this.setState({
+        isLoading: true,
+      })
+      const url = "/api/user/autologin";
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          'x-access-token': token
+        },
+      })
+      .then((response) => {
+        return response.json()}
+      )
+      .then((data) =>{
+        this.login(data);
+      });
+    }
   }
 
   render() {
-    const {loggedIn} = this.state;
+    const {loggedIn, isLoading} = this.state;
     return (
       <div id = "appContainer">
         <NavBar
@@ -51,12 +80,11 @@ class FoodieApp extends Component {
         logout = {this.logout}
         />
         <Switch>
-          <Route exact path = "/" render = {props => <Home {...props} />} />
+          <Route exact path = "/" render = {props => <Home {...props} isLoading = {isLoading} />} />
           <Route exact path = "/about" render = {props => <About {...props} /> } />
-          <Route exact path = "/login-register" render = {props => <LoginRegister {...props} login = {this.login} /> } />
+          <Route exact path = "/login-register" render = {props => <LoginRegister {...props} login = {this.login} register = {this.register} /> } />
           <Route path = "/favorites" render = {props => <Favorites {...props} />} />
           <Route path = "/results/:location([a-zA-Z-]+-[a-zA-Z-]+)/:food([a-zA-Z-]+)/:budget(\d+)" render = {props => <Results {...props} loggedIn = {loggedIn}/> } />
-        {/*<Route path = "/" render {props => <NoPage }*/}
         </Switch>
       </div>
     );
